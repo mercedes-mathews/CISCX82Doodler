@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">DoodleCISC482</string>
+
+    <string-array name="color_options">
+        <item>Red</item>
+        <item>Blue</item>
+        <item>Green</item>
+        <item>Yellow</item>
+    </string-array>
+
 </resources>
