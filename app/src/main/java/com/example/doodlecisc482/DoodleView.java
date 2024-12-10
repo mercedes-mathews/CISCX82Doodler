@@ -15,13 +15,15 @@ import java.util.List;
 public class DoodleView extends View {
     private Paint currentPaint;
     private Path currentPath;
-    private List<DrawPath> paths; // List to store paths and their paints
+    private List<DrawPath> paths;       // List to store paths and their paints
+    private List<DrawPath> redoPaths;  // List to store paths for redo
 
     public DoodleView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        // Initialize the list of paths
+        // Initialize the lists
         paths = new ArrayList<>();
+        redoPaths = new ArrayList<>();
 
         // Initialize the current Paint object
         currentPaint = createNewPaint(Color.BLACK, 10, 255);
@@ -45,29 +47,50 @@ public class DoodleView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX(); // X-coordinate of touch
-        float y = event.getY(); // Y-coordinate of touch
+        float x = event.getX();
+        float y = event.getY();
 
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN: // Start of a touch
-                currentPath = new Path(); // Create a new path for this touch
+            case MotionEvent.ACTION_DOWN:
+                currentPath = new Path();
                 currentPath.moveTo(x, y);
                 break;
 
-            case MotionEvent.ACTION_MOVE: // Move while touching
+            case MotionEvent.ACTION_MOVE:
                 currentPath.lineTo(x, y);
                 break;
 
-            case MotionEvent.ACTION_UP: // Lift up
+            case MotionEvent.ACTION_UP:
                 // Save the current path and paint to the list
                 paths.add(new DrawPath(currentPath, currentPaint));
-                currentPath = new Path(); // Reset for the next touch
-                currentPaint = new Paint(currentPaint); // Clone the current paint for future use
+                currentPath = new Path();
+                currentPaint = new Paint(currentPaint);
+
+                // Clear the redo stack since a new path is drawn
+                redoPaths.clear();
                 break;
         }
 
         invalidate(); // Redraw the view
         return true;
+    }
+
+    // Method to undo the last path
+    public void undo() {
+        if (!paths.isEmpty()) {
+            // Move the last path to the redo stack
+            redoPaths.add(paths.remove(paths.size() - 1));
+            invalidate(); // Redraw the view
+        }
+    }
+
+    // Method to redo the last undone path
+    public void redo() {
+        if (!redoPaths.isEmpty()) {
+            // Move the last path from redo stack back to paths
+            paths.add(redoPaths.remove(redoPaths.size() - 1));
+            invalidate(); // Redraw the view
+        }
     }
 
     // Method to set brush color
@@ -87,8 +110,9 @@ public class DoodleView extends View {
 
     // Method to clear the canvas
     public void clearCanvas() {
-        paths.clear(); // Clear all saved paths
-        currentPath.reset(); // Clear the current path
+        paths.clear();
+        redoPaths.clear(); // Clear redo stack as well
+        currentPath.reset();
         invalidate();
     }
 

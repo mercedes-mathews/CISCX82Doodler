@@ -23,6 +23,14 @@ public class MainActivity extends AppCompatActivity {
         Button refreshButton = findViewById(R.id.refreshButton);
         refreshButton.setOnClickListener(v -> doodleView.clearCanvas());
 
+        // Find and set up the Undo Button
+        Button undoButton = findViewById(R.id.undoButton);
+        undoButton.setOnClickListener(v -> doodleView.undo());
+
+        // Find and set up the Redo Button
+        Button redoButton = findViewById(R.id.redoButton);
+        redoButton.setOnClickListener(v -> doodleView.redo());
+
         // Set up the Brush Size SeekBar
         SeekBar brushSizeSeekBar = findViewById(R.id.brushSizeSeekBar);
         brushSizeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

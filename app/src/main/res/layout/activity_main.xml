@@ -8,6 +8,9 @@
     tools:context=".MainActivity">
 
     <!-- DoodleView (Drawing Area) -->
+
+    <!-- BottomAppBar -->
+
     <com.example.doodlecisc482.DoodleView
         android:id="@+id/doodleView"
         android:layout_width="match_parent"
@@ -16,7 +19,6 @@
         app:layout_constraintBottom_toTopOf="@id/widgetContainer"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- BottomAppBar -->
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
         android:layout_width="match_parent"
@@ -35,6 +37,8 @@
         app:layout_anchor="@id/bottomAppBar"
         app:layout_anchorGravity="top">
 
+        <!-- Brush Size SeekBar -->
+
         <Button
             android:id="@+id/refreshButton"
             android:layout_width="90dp"
@@ -44,7 +48,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/colorSpinner"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.48" />
 
         <Spinner
             android:id="@+id/colorSpinner"
@@ -55,9 +60,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/opacitySeekBar"
             app:layout_constraintStart_toEndOf="@+id/refreshButton"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.103" />
 
-        <!-- Brush Size SeekBar -->
         <SeekBar
             android:id="@+id/brushSizeSeekBar"
             android:layout_width="137dp"
@@ -102,5 +107,32 @@
             app:layout_constraintStart_toStartOf="@+id/opacitySeekBar"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
+
+        <Button
+            android:id="@+id/undoButton"
+            android:layout_width="64dp"
+            android:layout_height="48dp"
+            android:drawableTop="@drawable/undo_svgrepo_com__1_"
+            android:text="Undo"
+            android:textSize="11sp"
+            app:icon="@drawable/undo_svgrepo_com__1_"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/redoButton"
+            app:layout_constraintStart_toEndOf="@+id/refreshButton"
+            app:layout_constraintTop_toBottomOf="@+id/colorSpinner" />
+
+        <Button
+            android:id="@+id/redoButton"
+            android:layout_width="63dp"
+            android:layout_height="46dp"
+            android:drawableTop="@drawable/undo_svgrepo_com__1_"
+            android:text="Undo"
+            android:textSize="11sp"
+            app:icon="@drawable/redo_svgrepo_com"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/opacitySeekBar"
+            app:layout_constraintTop_toBottomOf="@+id/colorSpinner" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
